@@ -1,0 +1,32 @@
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+function addExpense() {
+    let amount = document.getElementById("amount").value;
+    let category = document.getElementById("category").value;
+
+    if (amount === "") return;
+
+    expenses.push({ amount, category });
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+
+    displayExpenses();
+}
+
+function displayExpenses() {
+    let list = document.getElementById("list");
+    let total = 0;
+
+    list.innerHTML = "";
+
+    expenses.forEach((e) => {
+        total += Number(e.amount);
+
+        let li = document.createElement("li");
+        li.innerText = `${e.category}: ₹${e.amount}`;
+        list.appendChild(li);
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+displayExpenses();
